@@ -1,0 +1,12 @@
+webrtcvad
+pydub
+matplotlib
+scipy
+numpy
+IPython
+noisereduce
+librosa
+tqdm
+tensorflow
+ipywidgets
+sounddevice
