@@ -22,8 +22,8 @@ COMMANDS = {
     '8': 'dong_rem',
     '9': 'bat_tv',
     '10': 'tat_tv',
-    '12': 'bat_dieu_hoa',
-    '13': 'tat_dieu_hoa'
+    '11': 'bat_dieu_hoa',
+    '12': 'tat_dieu_hoa'
 }
 
 def get_next_recording_id(command_dir):
