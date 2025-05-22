@@ -129,22 +129,36 @@ class AudioCommandDetector:
             final_segment = best_segment[cut_len:] if len(best_segment) > cut_len else best_segment
 
         # CAD 0.8s và pad 0.1s mỗi bên
-        cad_len = int(0.8 * rate)
+        # cad_len = int(0.8 * rate)
+        # stride = int(0.02 * rate)
+
+        # max_energy = 0
+        # best_start = 0
+        # for i in range(0, len(final_segment) - cad_len + 1, stride):
+        #     window = final_segment[i:i + cad_len]
+        #     energy = np.sum(window.astype(np.float32) ** 2)
+        #     if energy > max_energy:
+        #         max_energy = energy
+        #         best_start = i
+
+        # cad_segment = final_segment[best_start:best_start + cad_len]
+
+        # pad_len = int(0.1 * rate)
+        # padded_segment = np.pad(cad_segment, (pad_len, pad_len), mode='constant')
+
+        segment_len = int(1.0 * rate)
         stride = int(0.02 * rate)
 
         max_energy = 0
         best_start = 0
-        for i in range(0, len(final_segment) - cad_len + 1, stride):
-            window = final_segment[i:i + cad_len]
+        for i in range(0, len(final_segment) - segment_len + 1, stride):
+            window = final_segment[i:i + segment_len]
             energy = np.sum(window.astype(np.float32) ** 2)
             if energy > max_energy:
                 max_energy = energy
                 best_start = i
 
-        cad_segment = final_segment[best_start:best_start + cad_len]
-
-        pad_len = int(0.1 * rate)
-        padded_segment = np.pad(cad_segment, (pad_len, pad_len), mode='constant')
+        padded_segment = final_segment[best_start:best_start + segment_len]
 
         # Chuẩn hóa âm lượng (Peak Normalization)
         max_val = np.max(np.abs(padded_segment))
