@@ -92,8 +92,8 @@ class AudioCommandDetector:
         speech_mask = np.pad(speech_mask, (0, len(denoised_audio) - len(speech_mask)), mode='constant')
         speech_audio = denoised_audio * speech_mask
 
-        # CAD: 1.7s đoạn có năng lượng cao
-        window_sec = 1.7
+        # CAD: 1.5s đoạn có năng lượng cao
+        window_sec = 1.5
         window_len = int(window_sec * rate)
         stride = int(0.2 * rate)
 
@@ -106,45 +106,7 @@ class AudioCommandDetector:
                 max_energy = energy
                 best_segment = window
 
-        # Cắt 0.2s đầu hoặc cuối
-        cut_sec = 0.2
-        cut_len = int(cut_sec * rate)
-        check_len = int(0.3 * rate)
-        stride = int(0.01 * rate)
-
-        max_energy = 0
-        best_start = 0
-        for i in range(0, len(best_segment) - check_len + 1, stride):
-            window = best_segment[i:i + check_len]
-            energy = np.sum(window.astype(np.float32) ** 2)
-            if energy > max_energy:
-                max_energy = energy
-                best_start = i
-
-        best_start_sec = best_start / rate
-
-        if best_start_sec < 0.3:
-            final_segment = best_segment[:-cut_len]
-        else:
-            final_segment = best_segment[cut_len:] if len(best_segment) > cut_len else best_segment
-
-        # CAD 0.8s và pad 0.1s mỗi bên
-        # cad_len = int(0.8 * rate)
-        # stride = int(0.02 * rate)
-
-        # max_energy = 0
-        # best_start = 0
-        # for i in range(0, len(final_segment) - cad_len + 1, stride):
-        #     window = final_segment[i:i + cad_len]
-        #     energy = np.sum(window.astype(np.float32) ** 2)
-        #     if energy > max_energy:
-        #         max_energy = energy
-        #         best_start = i
-
-        # cad_segment = final_segment[best_start:best_start + cad_len]
-
-        # pad_len = int(0.1 * rate)
-        # padded_segment = np.pad(cad_segment, (pad_len, pad_len), mode='constant')
+        final_segment = best_segment
 
         segment_len = int(1.0 * rate)
         stride = int(0.02 * rate)
