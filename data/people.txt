@@ -2,12 +2,12 @@
 02 Hong Linh
 03 Duc Trung
 04 Trung Hieu
-05 Minh An
-06 The Bach
+05 Minh An - LAB
+06 The Bach - LAB
 07 Hong Hanh
 08 Tuan
 09 Truong Ngoc Minh
-10
+10 Duong -LAB
 11
 12
 13

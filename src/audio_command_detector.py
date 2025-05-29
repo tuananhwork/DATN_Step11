@@ -26,7 +26,7 @@ class AudioCommandDetector:
         # Định nghĩa classes
         self.classes = ['bat_den', 'bat_dieu_hoa', 'bat_quat', 'bat_tv',
                         'do_am', 'dong_rem', 'mo_rem', 'nhiet_do',
-                        'tat_den', 'tat_dieu_hoa', 'tat_quat', 'tat_tv']
+                        'tat_den', 'tat_dieu_hoa', 'tat_quat', 'tat_tv', 'unknown']
         
         # Khởi tạo VAD
         self.vad = webrtcvad.Vad(2)
@@ -40,7 +40,7 @@ class AudioCommandDetector:
             def forward(self, x):
                 return self.fn(x) + x
 
-        def ConvMixer(dim, depth, kernel_size=9, patch_size=7, n_classes=12):
+        def ConvMixer(dim, depth, kernel_size=9, patch_size=7, n_classes=13):
             return nn.Sequential(
                 nn.Conv2d(1, dim, kernel_size=patch_size, stride=patch_size),
                 nn.GELU(),
@@ -60,7 +60,7 @@ class AudioCommandDetector:
                 nn.Linear(dim, n_classes)
             )
         
-        return ConvMixer(dim=256, depth=8, n_classes=12)
+        return ConvMixer(dim=256, depth=8, n_classes=13)
 
     def preprocess_audio(self, input_path, output_path=None):
         """Tiền xử lý âm thanh"""

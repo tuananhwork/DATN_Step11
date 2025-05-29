@@ -8,6 +8,7 @@
 │   ├── processed/          # Processed audio files
 │   ├── raw/               # Raw audio files
 │   └── models/            # Trained model files
+│   └── _background_noise_/     # Google background noise
 ├── notebooks/
 │   ├── 1.0_preprocess.ipynb           # Initial data preprocessing
 │   ├── 2.0_batch_preprocess.ipynb     # Batch preprocessing of audio files
